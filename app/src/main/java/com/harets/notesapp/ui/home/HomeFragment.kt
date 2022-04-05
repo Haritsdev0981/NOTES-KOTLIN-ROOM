@@ -8,13 +8,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.harets.notesapp.R
 import com.harets.notesapp.data.entity.Notes
 import com.harets.notesapp.databinding.FragmentHomeBinding
 import com.harets.notesapp.ui.NotesViewModel
 import com.harets.notesapp.utils.ExtentionFunctions.setActionBar
+import kotlin.contracts.Returns
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -70,6 +73,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             adapter = homeAdapter
             // staggeredGridLayout = mengisi letak kosong terlebih dahulu pada layout
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+            swipeToDelete(this)
         }
     }
 
@@ -157,6 +161,29 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener {
             }
         }
         return true
+    }
+
+    private fun swipeToDelete(recyclerView: RecyclerView){
+        val swipeToDelete = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                //biar bisa diakse ke deleteNote buat variabel deletedItem
+                val deletedItem = homeAdapter.listNotes[viewHolder.adapterPosition]
+                homeViewModel.deleteNote(deletedItem)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDelete)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onDestroy() {

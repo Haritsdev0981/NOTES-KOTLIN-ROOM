@@ -23,9 +23,13 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>(){
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = listNotes[position]
         holder.binding.apply {
-            tvTitle.text = data.title
-            tvDescription.text = data.description
-            tvDate.text = data.date
+
+            mNotes = data
+            executePendingBindings()
+
+//            tvTitle.text = data.title
+//            tvDescription.text = data.description
+//            tvDate.text = data.date
 
 //            val pink = ContextCompat.getColor(priorityIndicator.context, R.color.pink)
 //            val yellow = ContextCompat.getColor(priorityIndicator.context, R.color.yellow)
@@ -35,21 +39,21 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>(){
 //                Priority.MEDIUM -> priorityIndicator.setBackgroundColor(yellow)
 //                Priority.LOW -> priorityIndicator.setBackgroundColor(green)
 //            }
-            when(data.priority){
-                Priority.HIGH -> {
-                    // cara memanggil warna di object
-                    val pink = ContextCompat.getColor(priorityIndicator.context, R.color.pink)
-                    priorityIndicator.setCardBackgroundColor(pink)
-                }
-                Priority.MEDIUM -> {
-                    val yellow = ContextCompat.getColor(priorityIndicator.context, R.color.yellow)
-                    priorityIndicator.setCardBackgroundColor(yellow)
-                }
-                Priority.LOW -> {
-                    val green = ContextCompat.getColor(priorityIndicator.context, R.color.green)
-                    priorityIndicator.setCardBackgroundColor(green)
-                }
-            }
+//            when(data.priority){
+//                Priority.HIGH -> {
+//                    // cara memanggil warna di object
+//                    val pink = ContextCompat.getColor(priorityIndicator.context, R.color.pink)
+//                    priorityIndicator.setCardBackgroundColor(pink)
+//                }
+//                Priority.MEDIUM -> {
+//                    val yellow = ContextCompat.getColor(priorityIndicator.context, R.color.yellow)
+//                    priorityIndicator.setCardBackgroundColor(yellow)
+//                }
+//                Priority.LOW -> {
+//                    val green = ContextCompat.getColor(priorityIndicator.context, R.color.green)
+//                    priorityIndicator.setCardBackgroundColor(green)
+//                }
+//            }
         }
     }
 

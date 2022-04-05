@@ -8,7 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.harets.notesapp.ui.MainActivity
 import com.harets.notesapp.R
 
-object ExtentionFunctions {
+object ExtentionFunctions { //set toolbar
     fun Toolbar.setActionBar(requireActivity: FragmentActivity) {
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
